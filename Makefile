@@ -28,6 +28,7 @@ endif
 TOPLEVEL        ?= $(PROJECT)
 CONSTRAINTS     ?= $(PROJECT).ucf
 BITFILE         ?= build/$(PROJECT).bit
+BINFILE			?= build/$(PROJECT).bin
 
 COMMON_OPTS     ?= -intstyle xflow
 XST_OPTS        ?=
@@ -50,6 +51,8 @@ XC3SPROG_EXE    ?= xc3sprog
 XC3SPROG_CABLE  ?= none
 XC3SPROG_OPTS   ?=
 
+MIMASV2_EXE		?= MimasV2Config
+MIMASV2_DEVICE	?= /dev/ttyACM0
 
 ###########################################################################
 # Internal variables, platform-specific definitions, and macros
@@ -129,6 +132,8 @@ $(BITFILE): project.cfg $(VSOURCE) $(CONSTRAINTS) build/$(PROJECT).prj build/$(P
 	    -w $(PROJECT).ncd $(PROJECT).bit
 	@echo -ne "\e[1;32m======== OK ========\e[m\n"
 
+$(BINFILE):
+	$(error BINFILE not generated. Enable binary file generation by adding "-g Binary:yes" to BITGEN_OPTS. Mimas V2 cannot be programmed)
 
 ###########################################################################
 # Testing (work in progress)
@@ -175,6 +180,10 @@ ifeq ($(PROGRAMMER), xc3sprog)
 prog: $(BITFILE)
 	$(XC3SPROG_EXE) -c $(XC3SPROG_CABLE) $(XC3SPROG_OPTS) $(BITFILE)
 endif
+
+ifeq ($(PROGRAMMER), mimasv2)
+prog: $(BITFILE) $(BINFILE)
+	$(MIMASV2_EXE) $(MIMASV2_DEVICE) $(BINFILE)
 
 ifeq ($(PROGRAMMER), none)
 prog:

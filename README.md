@@ -129,6 +129,14 @@ A number of other keys can be set in the project configuration, including:
         separately. The cable name must be set as `XC3SPROG_CABLE`; additional
         options can be set as `XC3SPROG_OPTS`.
 
+      * `mimasv2`
+
+        Uses the [MimasV2Config](https://github.com/numato/samplecode/blob/master/FPGA/MimasV2/tools/configuration/python/MimasV2Config.py) utility for programming Numato Lab Mimas V2 Spartan 6
+        Development board. The path to the executable can be set as `MIMASV2_EXE`.
+        The device name can be set `MIMASV2_DEVICE` (defaults to /dev/ttyACM0).
+        `BITGEN_OPTS` should be set as `-g Binary:yes` for generating binary file for
+        programming with this utility.
+
 
 Targets
 -------
