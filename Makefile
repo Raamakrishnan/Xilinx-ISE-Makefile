@@ -184,6 +184,7 @@ endif
 ifeq ($(PROGRAMMER), mimasv2)
 prog: $(BITFILE) $(BINFILE)
 	$(MIMASV2_EXE) $(MIMASV2_DEVICE) $(BINFILE)
+endif
 
 ifeq ($(PROGRAMMER), none)
 prog:
